@@ -34,7 +34,7 @@ pub enum Direction {
 /// Signal clients usually use the identity store in a [TOFU] manner, but this is not required.
 ///
 /// [TOFU]: https://en.wikipedia.org/wiki/Trust_on_first_use
-#[async_trait(?Send)]
+#[async_trait]
 pub trait IdentityKeyStore {
     /// Return the single specific identity the store is assumed to represent, with private key.
     async fn get_identity_key_pair(&self) -> Result<IdentityKeyPair>;
@@ -73,7 +73,7 @@ pub trait IdentityKeyStore {
 }
 
 /// Interface for storing pre-keys downloaded from a server.
-#[async_trait(?Send)]
+#[async_trait]
 pub trait PreKeyStore {
     /// Look up the pre-key corresponding to `prekey_id`.
     async fn get_pre_key(&self, prekey_id: PreKeyId) -> Result<PreKeyRecord>;
@@ -86,7 +86,7 @@ pub trait PreKeyStore {
 }
 
 /// Interface for storing signed pre-keys downloaded from a server.
-#[async_trait(?Send)]
+#[async_trait]
 pub trait SignedPreKeyStore {
     /// Look up the signed pre-key corresponding to `signed_prekey_id`.
     async fn get_signed_pre_key(
@@ -105,7 +105,7 @@ pub trait SignedPreKeyStore {
 /// Interface for storing signed Kyber pre-keys downloaded from a server.
 ///
 /// NB: libsignal makes no distinction between one-time and last-resort pre-keys.
-#[async_trait(?Send)]
+#[async_trait]
 pub trait KyberPreKeyStore {
     /// Look up the signed kyber pre-key corresponding to `kyber_prekey_id`.
     async fn get_kyber_pre_key(&self, kyber_prekey_id: KyberPreKeyId) -> Result<KyberPreKeyRecord>;
@@ -129,7 +129,7 @@ pub trait KyberPreKeyStore {
 /// forward-secret message chain in the [Double Ratchet] protocol.
 ///
 /// [Double Ratchet]: https://signal.org/docs/specifications/doubleratchet/
-#[async_trait(?Send)]
+#[async_trait]
 pub trait SessionStore {
     /// Look up the session corresponding to `address`.
     async fn load_session(&self, address: &ProtocolAddress) -> Result<Option<SessionRecord>>;
@@ -143,7 +143,7 @@ pub trait SessionStore {
 }
 
 /// Interface for storing sender key records, allowing multiple keys per user.
-#[async_trait(?Send)]
+#[async_trait]
 pub trait SenderKeyStore {
     /// Assign `record` to the entry for `(sender, distribution_id)`.
     async fn store_sender_key(
